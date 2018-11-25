@@ -1,37 +1,105 @@
-## Welcome to GitHub Pages
+# CPI Collectables
 
-You can use the [editor on GitHub](https://github.com/cpicollectables/cpicollectables.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+.calculator {
+  padding: 10px;
+  /* Content inside is not right up to the edges */
+  background-image: url("imageassets/purplefriends-pattern.png");
+  /* Setting a purple pattern background to make the calculator element stand out */
+}
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+.calculator span {
+  /* For the plus and minus buttons */
+  background-color: #6852e2;
+  padding: 5px 11px;
+  /* Setting a background colour and padding to provide a larger surface area for the user to touch */
+  color: white;
+  /* White symbols on a dark purple background colour for easy legibility */
+  border-radius: 6px;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.1);
+  /* Club Penguin Island style, but scaled down smaller */
+  margin: auto 5px;
+  /* Space on both sides of the button */
+}
 
-### Markdown
+.calculator input {
+  font-family: 'proxima_nova_bold';
+  font-size: 15pt;
+  text-align: center;
+  /* For the <input> where the value is displayed - some styling code has to be repeated */
+  width: 100px;
+  /* Setting a fixed width */
+  border-radius: 6px;
+  /* Club Penguin Island style */
+}
+// Storing information and values for each collectible in an object
+var collectibles = {
+  "seashells": {
+    "facts": ["1 coin per 4 shells exchanged", "Refreshes every 15 minutes", "Found in Beacon Boardwalk and Coconut Cove"],
+    "currentfact": 0,
+    "amountcollected": 0,
+    "exchangerate": 4
+  },
+  "crystals": {
+    "facts": ["1 coin per 4 crystals exchanged", "Refreshes every 15 minutes", "Found in The Sea Caves"],
+    "currentfact": 0,
+    "amountcollected": 0,
+    "exchangerate": 4
+  },
+  "icecrystals": {
+    "facts": ["1 coin per 4 crystals exchanged", "Refreshes every 15 minutes", "Found in Mt. Blizzard"],
+    "currentfact": 0,
+    "amountcollected": 0,
+    "exchangerate": 4
+  },
+  "windchimes": {
+    "facts": ["1 coin per 4 chimes exchanged", "Refreshes every 15 minutes", "Found in Island Central"],
+    "currentfact": 0,
+    "amountcollected": 0,
+    "exchangerate": 4
+  }
+};
+// An array containing all of the keys of the objects (collectible names)
+var collectibleskeys = Object.keys(collectibles);
+for (i = 0; i < collectibleskeys.length; i++) {
+  // For every collectible in the object...
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+  var collectible = collectibleskeys[i];
+  // Get the collectibles' name key
 
-```markdown
-Syntax highlighted code block
+  $(".collectible-" + collectible + " .calculator").html('<span class="calculator-minus" id="' + collectible + '">&#8211;</span><input type="number" min="0" value="0" class="calculator-input" id="' + collectible + '-input"><span class="calculator-plus" id="' + collectible + '">+</span>');
+  // Add calculator controls, with IDs of elements containing the collectibles' name key
+}
+  
+$(".coinsearned").html('<i class="custom-emoji coinicon"></i>' + " You will earn <strong>0</strong> coins.");
+// And for users with JavaScript enabled, this adds a default value where they'll find out how many coins they've earned
+$("input").change(function(event) {
+  // Listener for when a user changes the value of an input tag
 
-# Header 1
-## Header 2
-### Header 3
+  var collectible = event.target.id.slice(0, event.target.id.length - 6);
+  // Get part of the ID which will be the collectible key of the collectible
 
-- Bulleted
-- List
+  if (document.getElementById(collectible + "-input").value == "") {
+    // If the entered value is nothing...
 
-1. Numbered
-2. List
+    document.getElementById(collectible + "-input").value = 0;
+    // Set the value back to 0 to prevent errors in calculations of earnings
 
-**Bold** and _Italic_ and `Code` text
+  }
 
-[Link](url) and ![Image](src)
-```
+  collectibles[collectible].amountcollected = parseInt(document.getElementById(collectible + "-input").value);
+  // Set the amountcollected in the object to the value of the element currently
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+  calculateCoins();
+  // Function to call calculating earnings
 
-### Jekyll Themes
+});
+/* The "intentional bug" I created... and then forgot about... */
+/* I did not comment my JavaScript as I was going along yesterday */
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/cpicollectables/cpicollectables.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+  for (i = 0; i < 1; i++) {
+    // For the first collectible in the object...
 
-### Support or Contact
+/* What it was supposed to be once I was ready */
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+  for (i = 0; i < collectibleskeys.length; i++) {
+    // For every collectible in the object...
